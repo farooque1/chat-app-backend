@@ -83,6 +83,15 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('resetChat', async () => {
+    try {
+      await Message.deleteMany({});
+      io.emit('chatReset');
+    } catch (err) {
+      console.error('Error resetting chat:', err);
+    }
+  });
+
   socket.on('disconnect', () => {
     console.log('User disconnected:', socket.id);
   });
